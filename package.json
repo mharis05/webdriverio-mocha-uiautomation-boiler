@@ -20,7 +20,7 @@
     "test automation",
     "javascript"
   ],
-  "author": "Serhat Bolsu <serhatbolsu@gmail.com>",
+  "author": "Haris Saleem <harissaleemkhi@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "@wdio/cli": "^6.4.6",
