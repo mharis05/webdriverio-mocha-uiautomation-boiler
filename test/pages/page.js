@@ -1,10 +1,12 @@
 export default class Page {
   constructor() {
     this.title = 'my Page';
+    this.url = "https://demo.nopcommerce.com/";
   }
 
   open(path) {
     browser.url(path);
+    return this;
   }
 
   verifyTextInPage(text) {

@@ -1,4 +1,4 @@
-const utilities= require("./support/utils/Utilities");
+const utilities = require("./support/utils/Utilities");
 const chai = require('chai');
 const allure = require('@wdio/allure-reporter').default;
 
@@ -27,6 +27,7 @@ exports.config = {
     //
     specs: [
         './test/specs/**/*.spec.js'
+        //'./test/specs/nop-commerce.spec.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -55,11 +56,11 @@ exports.config = {
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
     capabilities: [{
-    
+
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
-        maxInstances: 3,
+        maxInstances: 1,
         //
         browserName: 'chrome',
         'goog:chromeOptions': {
@@ -69,7 +70,11 @@ exports.config = {
         // it is possible to configure which logTypes to include/exclude.
         // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
         // excludeDriverLogs: ['bugreport', 'server'],
-    }],
+    },
+    // {
+    //     browserName: 'firefox'
+    // }
+    ],
     //
     // ===================
     // Test Configurations
@@ -101,7 +106,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://uitestingplayground.com',
+    baseUrl: "https://demo.nopcommerce.com/",
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: elementTimeout,
@@ -117,24 +122,25 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
+    port: 9898,
     services: ['chromedriver',
-        // ['selenium-standalone', {
-        //     logPath: 'logs',
-        //     installArgs: {
-        //         drivers: {
-        //             chrome: { version: '79.0.3945.88' },
-        //             firefox: { version: '0.26.0' }
-        //         }
-        //     },
-        //     args: {
-        //         drivers: {
-        //             chrome: { version: '79.0.3945.88' },
-        //             firefox: { version: '0.26.0' }
-        //         }
-        //     },
-        // }]
+        ['selenium-standalone', {
+            logPath: 'logs'
+            // installArgs: {
+            //     drivers: {
+            //         chrome: { version: '79.0.3945.88' },
+            //         firefox: { version: '0.26.0' }
+            //     }
+            // },
+            // args: {
+            //     drivers: {
+            //         chrome: { version: '79.0.3945.88' },
+            //         firefox: { version: '0.26.0' }
+            //     }
+            // },
+        }]
     ],
-    
+
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks.html
@@ -153,20 +159,20 @@ exports.config = {
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter.html
     reporters: [
-      'spec',
-      ['allure', {
-        outputDir: 'report/allure-results',
-        disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: false,
-      }],
-      ['junit', {
-        outputDir: 'report/junit',
-        outputFileFormat: function(options) { // optional
-          return `test-${options.cid}-results.xml`
-        }
-      }]
+        'spec',
+        ['allure', {
+            outputDir: 'report/allure-results',
+            disableWebdriverStepsReporting: true,
+            disableWebdriverScreenshotsReporting: false,
+        }],
+        //   ['junit', {
+        //     outputDir: 'report/junit',
+        //     outputFileFormat: function(options) { // optional
+        //       return `test-${options.cid}-results.xml`
+        //     }
+        //   }]
     ],
- 
+
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -259,7 +265,7 @@ exports.config = {
     /**
      * Function to be executed after a test (in Mocha/Jasmine).
      */
-    afterTest: function(test, context, { error, result, duration, passed, retries }) {
+    afterTest: function (test, context, { error, result, duration, passed, retries }) {
         if (error !== undefined) {
             try {
                 //TODO: Fix allure reporting on failure

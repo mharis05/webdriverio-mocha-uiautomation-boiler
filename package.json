@@ -23,7 +23,7 @@
   "author": "Serhat Bolsu <serhatbolsu@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@wdio/cli": "^6.0.13",
+    "@wdio/cli": "^6.4.6",
     "@wdio/sync": "^6.0.12",
     "chai": "^4.2.0"
   },
